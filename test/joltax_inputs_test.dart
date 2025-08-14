@@ -1,5 +1,5 @@
-import 'package:flutter_inputs/flutter_inputs.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:joltax_inputs/flutter_inputs.dart';
 
 void main() {
   test('adds one to input values', () {
