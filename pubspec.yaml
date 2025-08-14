@@ -1,11 +1,14 @@
 name: flutter_inputs
 description: "User-friendly reusable input tools for Flutter apps"
 version: 0.0.1
-homepage:
+homepage: https://github.com/joltax-core/flutter_inputs.git
+repository: https://github.com/joltax-core/flutter_inputs
+publisher: joltax.com
+
 
 environment:
   sdk: ^3.8.1
-  flutter: ">=1.17.0"
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:
