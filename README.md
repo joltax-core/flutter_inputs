@@ -15,4 +15,4 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_inputs: ^0.0.1
+  flutter_inputs: ^0.0.1+1
