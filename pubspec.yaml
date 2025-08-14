@@ -3,7 +3,6 @@ description: "User-friendly reusable input tools for Flutter apps"
 version: 0.0.1
 homepage: https://github.com/joltax-core/flutter_inputs.git
 repository: https://github.com/joltax-core/flutter_inputs
-publisher: joltax.com
 
 
 environment:
