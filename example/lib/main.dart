@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:joltax_inputs/flutter_inputs.dart';
+import 'package:joltax_inputs/inputs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,10 +38,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            JoltaxOutlinedInput(
-              label: 'Username',
-              keyboardType: TextInputType.text,
-            ),
+            JoltaxOutlinedInput(label: 'Username', keyboardType: TextInputType.text),
             const SizedBox(height: 16),
             JoltaxOutlinedInput(
               label: 'Password',

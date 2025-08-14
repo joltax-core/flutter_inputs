@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:joltax_inputs/flutter_inputs.dart';
+import 'package:joltax_inputs/inputs.dart';
 
-/// Joltax tarzı kenarlıklı input.
-/// Tüm stil bilgileri [JoltaxInputTheme] üzerinden gelir.
+/// Joltax-style outlined input widget.
+/// All styles come from [JoltaxInputTheme] via ThemeData.extensions.
 class JoltaxOutlinedInput extends StatefulWidget {
   const JoltaxOutlinedInput({
     super.key,
     required this.label,
     this.controller,
-    required this.keyboardType,
+    this.keyboardType,
     this.isPassword = false,
     this.onChanged,
     this.obscureToggleText,
+    this.readOnly = false,
   });
 
-  /// Input etiketi.
+  /// Input label text.
   final String label;
 
-  /// Text controller.
+  /// Text controller for managing input value.
   final TextEditingController? controller;
 
-  /// Klavye tipi.
-  final TextInputType keyboardType;
+  /// Keyboard type (e.g. text, number, email).
+  final TextInputType? keyboardType;
 
-  /// Şifre alanı mı?
+  /// If true, the input will hide its content and show a toggle to reveal it.
   final bool isPassword;
 
-  /// Değer değiştiğinde tetiklenir.
+  /// Callback when the input value changes.
   final ValueChanged<String>? onChanged;
 
-  /// Şifre alanında göster/gizle butonu metinleri.
-  /// Örn: `(show: 'Göster', hide: 'Gizle')`
+  /// Texts for password show/hide toggle.
+  /// Example: `(show: 'Show', hide: 'Hide')`
   final ({String show, String hide})? obscureToggleText;
+
+  /// If true, the input will be displayed as read-only.
+  final bool readOnly;
 
   @override
   State<JoltaxOutlinedInput> createState() => _JoltaxOutlinedInputState();
@@ -65,14 +69,29 @@ class _JoltaxOutlinedInputState extends State<JoltaxOutlinedInput> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).extension<JoltaxInputTheme>();
 
+    // Determine border and background colors based on state
+    final Color borderColor;
+    final double borderWidth;
+    final Color backgroundColor;
+
+    if (widget.readOnly) {
+      borderColor = theme?.readOnlyBorderColor ?? Colors.grey;
+      borderWidth = theme?.borderWidth ?? 0.5;
+      backgroundColor = theme?.readOnlyBackgroundColor ?? Colors.grey.shade200;
+    } else if (_isFocused) {
+      borderColor = theme?.focusedBorderColor ?? Colors.blue;
+      borderWidth = theme?.focusBorderWidth ?? 1.5;
+      backgroundColor = theme?.backgroundColor ?? Colors.white;
+    } else {
+      borderColor = theme?.borderColor ?? Colors.grey;
+      borderWidth = theme?.borderWidth ?? 0.5;
+      backgroundColor = theme?.backgroundColor ?? Colors.white;
+    }
+
     return Container(
       decoration: BoxDecoration(
-        color: theme?.backgroundColor,
-        border: Border.all(
-          width: _isFocused ? 1.5 : 0.5,
-          color: _isFocused ? theme?.focusedBorderColor ?? Colors.blue : theme?.borderColor ?? Colors.grey,
-          strokeAlign: BorderSide.strokeAlignOutside,
-        ),
+        color: backgroundColor,
+        border: Border.all(width: borderWidth, color: borderColor, strokeAlign: BorderSide.strokeAlignOutside),
         borderRadius: BorderRadius.circular(theme?.borderRadius ?? 8),
       ),
       padding: theme?.padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -88,6 +107,7 @@ class _JoltaxOutlinedInputState extends State<JoltaxOutlinedInput> {
               cursorColor: theme?.focusedBorderColor,
               cursorHeight: 16,
               obscureText: _obscureText,
+              readOnly: widget.readOnly,
               style: theme?.textStyle ?? const TextStyle(fontSize: 14),
               decoration: InputDecoration(
                 label: Text(
@@ -100,7 +120,7 @@ class _JoltaxOutlinedInputState extends State<JoltaxOutlinedInput> {
               ),
             ),
           ),
-          if (widget.isPassword)
+          if (widget.isPassword && !widget.readOnly)
             GestureDetector(
               onTap: _toggleObscure,
               child: Text(
