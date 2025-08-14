@@ -17,4 +17,4 @@ A reusable Flutter input widgets package that provides consistent, theme-driven,
 Add the package to your `pubspec.yaml`:
 ```yaml
 dependencies:
-  joltax_inputs: ^0.0.1+2s
+  joltax_inputs: ^0.0.1+2
